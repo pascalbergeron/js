@@ -1,26 +1,51 @@
-var rx = 0;
-var ry = 0;
-var rz = 0;
+function Drawer() {
+	this.pos = createVector(width / 2, height / 2);
+	this.vel = createVector(random(-4, 4), random(-4, 4));
+	this.size = 10;
+	this.c = random(360);
+
+	this.update = function() {
+		this.pos.add(this.vel);
+		this.vel.rotate(random(-0.3, 0.3));
+
+		if (this.pos.x > width) this.pos.x = 0;
+		if (this.pos.x < 0) this.pos.x = width;
+		if (this.pos.y > height) this.pos.y = 0;
+		if (this.pos.y < 0) this.pos.y = height;
+	}
+
+	this.show = function() {
+		fill(this.c, 100, 100);
+		this.c++;
+		if (this.c > 360) this.c = 0;
+		ellipse(this.pos.x, this.pos.y, this.size, this.size);
+	}
+}
+
+var d = [];
+var num = 500;
 
 function setup() {
-	createCanvas(displayWidth, displayHeight);
-	rectMode(CENTER);
-	setMoveThreshold(0.1);
+	createCanvas(windowWidth, windowHeight);
+	colorMode(HSB);
+
+	background(0);
+
+	for (var i = 0; i < num; i++) {
+		d[i] = new Drawer();
+	}
+}
+
+function mousePressed() {
+	background(0);
+	for (var i = 0; i < num; i++) {
+		d[i] = new Drawer();
+	}
 }
 
 function draw() {
-	background(50);
-	noStroke();
-	fill(255);
-	push();
-	translate(ry, rx);
-	rotate(rz);
-	rect(0, 0, 150, 150);
-	pop();
-}
-
-function deviceMoved() {
-	rx = map(rotationX, -90, 90, 0, displayHeight);
-	ry = map(rotationY, -90, 90, 0, displayWidth);
-	rz = radians(rotationZ);
+	for (var i = 0; i < num; i++) {
+		d[i].update();
+		d[i].show();
+	}
 }
