@@ -1,5 +1,5 @@
-function Drawer() {
-	this.pos = createVector(width / 2, height / 2);
+function Drawer(x, y) {
+	this.pos = createVector(x, y);
 	this.vel = createVector(random(-4, 4), random(-4, 4));
 	this.size = 10;
 	this.c = random(360);
@@ -32,14 +32,14 @@ function setup() {
 	background(0);
 
 	for (var i = 0; i < num; i++) {
-		d[i] = new Drawer();
+		d[i] = new Drawer(width / 2, height / 2);
 	}
 }
 
 function mousePressed() {
 	background(0);
 	for (var i = 0; i < num; i++) {
-		d[i] = new Drawer();
+		d[i] = new Drawer(mouseX, mouseY);
 	}
 }
 
