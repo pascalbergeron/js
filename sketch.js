@@ -23,28 +23,28 @@ function Drawer(x, y) {
 }
 
 var d = [];
-var num = 500;
+var num = 150;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 	colorMode(HSB);
 
-	background(0);
+	background(random(255), random(255), random(255));
 
 	for (var i = 0; i < num; i++) {
-		d[i] = new Drawer(width / 2, height / 2);
+		d[i] = new Drawer(0, 0);
 	}
 }
 
 function mousePressed() {
-	background(0);
+	background(random(255), random(255), random(255));
 	for (var i = 0; i < num; i++) {
-		d[i] = new Drawer(mouseX, mouseY);
+		d[i] = new Drawer(0, 0);
 	}
 }
 
 function draw() {
-	for (var i = 0; i < num; i++) {
+	for (var i = 0; i < d.length; i++) {
 		d[i].update();
 		d[i].show();
 	}
