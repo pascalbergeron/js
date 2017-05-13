@@ -22,7 +22,7 @@ function Drawer(x, y) {
 }
 
 var d = [];
-var num = 200;
+var num = 50;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
