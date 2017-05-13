@@ -15,19 +15,18 @@ function Drawer(x, y) {
 	}
 
 	this.show = function() {
-		fill(this.c, 100, 100);
-		this.c++;
+		fill(random(255), random(255), random(255));
 		if (this.c > 360) this.c = 0;
 		ellipse(this.pos.x, this.pos.y, this.size, this.size);
 	}
 }
 
 var d = [];
-var num = 150;
+var num = 200;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-	colorMode(HSB);
+	//	colorMode(HSB);
 
 	background(random(255), random(255), random(255));
 
@@ -44,6 +43,7 @@ function mousePressed() {
 }
 
 function draw() {
+	background(0, 2);
 	for (var i = 0; i < d.length; i++) {
 		d[i].update();
 		d[i].show();
