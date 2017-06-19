@@ -12,7 +12,7 @@ function draw() {
 	
 	var volume = mic.getLevel();
 	
-	var threshold = 0.05;
+	var threshold = 0.02;
 	if (volume > threshold) {
 		stroke(0);
 		fill(random(255), random(255), random(255));
