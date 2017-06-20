@@ -37,11 +37,11 @@ function setup() {
 }
 
 function draw() {
-  background(30);
 
   // map mouseY to modulator freq between a maximum and minimum frequency
   var modFreq = map(mouseY, height, 0, modMinFreq, modMaxFreq);
   modulator.freq(modFreq);
+  
 
   // change the amplitude of the modulator
   // negative amp reverses the sawtooth waveform, and sounds percussive
@@ -51,9 +51,11 @@ function draw() {
 
   // analyze the waveform
   waveform = analyzer.waveform();
+  
+  background(255);
 
   // draw the shape of the waveform
-  stroke(255);
+  stroke(51);
   strokeWeight(10);
   beginShape();
   for (var i = 0; i < waveform.length; i++){
@@ -67,7 +69,6 @@ function draw() {
   // add a note about what's happening
   text('Fréquence: ' + modFreq.toFixed(3) + ' Hz', 20, 20);
   text('Amplitude: ' + modDepth.toFixed(3), 20, 40);
-  text('PM: ' + carrierBaseFreq + ' Hz', width/2, 20);
 
 }
 
