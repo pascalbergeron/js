@@ -8,26 +8,30 @@ function setup() {
 }
 
 function draw() {
-	background(0, 51);
+	background(0, 10);
 	
-	var volume = mic.getLevel();
+	var volume = mic.getLevel() * 2;
 	
-	var threshold = 0.02;
-	if (volume > threshold) {
-		stroke(0);
-		fill(random(255), random(255), random(255));
-		rect(random(40, width), random( height), volume * 150, volume * 150);
-	}
+	stroke(255);
+	fill(random(255), random(255), random(255), 100);
+	ellipse(random(width), random(height), volume * 200);
+	fill(random(255), random(255), random(255), 100);
+	ellipse(random(width), random(height), volume * 200);
+	fill(random(255), random(255), random(255), 100);
+	ellipse(random(width), random(height), volume * 200);
+	fill(random(255), random(255), random(255), 100);
+	ellipse(random(width), random(height), volume * 200);
+	fill(random(255), random(255), random(255), 100);
+	ellipse(random(width), random(height), volume * 200);
 	
-	var y = map(volume, 0,1,height,0);
-	var ythreshold = map(threshold, 0,1,height,0);
+	
+	var y = map(volume, 0,2,height,0);
+	
 	
 	noStroke();
 	fill(175);
-	rect(0,0,30,height);
+	rect(0,0,50,height);
 	
-	fill(0);
-	rect(0,y,30,y);
-	stroke(0);
-	line(0, ythreshold, 29, ythreshold);
+	fill(175,0,0);
+	rect(0,y,50,y);
 }
