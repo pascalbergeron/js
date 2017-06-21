@@ -1,86 +1,48 @@
-var carrier; // this is the oscillator we will hear
-var modulator; // this oscillator will modulate the frequency of the carrier
+function Spiral(type) {
+	this.pos = createVector(width / 2, height / 2);
+	this.size = 10;
+	this.angle = 0;
+	this.r = random(255);
+	this.g = random(255);
+	this.b = random(255);
+	this.val = 2;
 
-var analyzer; // we'll use this visualize the waveform
+	this.update = function() {
+		this.angle += type;
+		this.r += this.val;
+		this.g += this.val;
+		this.b += this.val;
+	}
 
-// the carrier frequency pre-modulation
-var carrierBaseFreq = 220;
+	this.show = function() {
+		translate(width / 2, height / 2);
+		rotate(this.angle);
+		beginShape();
+		for (var i = 0; i < 500; i++) {
+			fill(this.r, this.g, this.b, 5);
+			curveVertex((i * 2) * sin(i / 5.0), (i * 2) * cos(i / 5.0));
+		}
+		endShape();
+	}
+}
 
-// min/max ranges for modulator
-var modMaxFreq = 112;
-var modMinFreq = 0;
-var modMaxDepth = 150;
-var modMinDepth = -150;
+var s;
+var s2;
 
 function setup() {
-  var cnv = createCanvas(windowWidth,windowHeight);
-  noFill();
+	createCanvas(windowWidth, windowHeight);
+	s = new Spiral(0.5);
+	s2 = new Spiral(-0.5)
 
-  carrier = new p5.Oscillator('sine');
-  carrier.amp(0); // set amplitude
-  carrier.freq(carrierBaseFreq); // set frequency
-  carrier.start(); // start oscillating
 
-  // try changing the type to 'square', 'sine' or 'triangle'
-  modulator = new p5.Oscillator('sawtooth');
-  modulator.start();
-
-  // add the modulator's output to modulate the carrier's frequency
-  modulator.disconnect();
-  carrier.freq( modulator );
-
-  // create an FFT to analyze the audio
-  analyzer = new p5.FFT();
-
-  // fade carrier in/out on mouseover / touch start
-  toggleAudio(cnv);
+	strokeWeight(1);
 }
 
 function draw() {
 
-  // map mouseY to modulator freq between a maximum and minimum frequency
-  var modFreq = map(mouseY, height, 0, modMinFreq, modMaxFreq);
-  modulator.freq(modFreq);
-  
+	s.update();
+	s.show();
 
-  // change the amplitude of the modulator
-  // negative amp reverses the sawtooth waveform, and sounds percussive
-  //
-  var modDepth = map(mouseX, 0, width, modMinDepth, modMaxDepth);
-  modulator.amp(modDepth);
-
-  // analyze the waveform
-  waveform = analyzer.waveform();
-  
-  background(255);
-
-  // draw the shape of the waveform
-  stroke(51);
-  strokeWeight(10);
-  beginShape();
-  for (var i = 0; i < waveform.length; i++){
-    var x = map(i, 0, waveform.length, 0, width);
-    var y = map(waveform[i], -1, 1, -height/2, height/2);
-    vertex(x, y + height/2);
-  }
-  endShape();
-
-  strokeWeight(1);
-  // add a note about what's happening
-  text('Fréquence: ' + modFreq.toFixed(3) + ' Hz', 20, 20);
-  text('Amplitude: ' + modDepth.toFixed(3), 20, 40);
-
-}
-
-// helper function to toggle sound
-function toggleAudio(cnv) {
-  cnv.mouseOver(function() {
-    carrier.amp(1.0, 0.01);
-  });
-  cnv.touchStarted(function() {
-    carrier.amp(1.0, 0.01);
-  });
-  cnv.mouseOut(function() {
-    carrier.amp(0.0, 1.0);
-  });
+	s2.update();
+	s2.show();
 }

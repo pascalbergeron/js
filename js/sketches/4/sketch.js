@@ -1,48 +1,45 @@
-function Spiral(type) {
-	this.pos = createVector(width / 2, height / 2);
-	this.size = 10;
-	this.angle = 0;
-	this.r = random(255);
-	this.g = random(255);
-	this.b = random(255);
-	this.val = 2;
+var col = 0;
 
+function Circle(x, y, r) {
+	this.position = createVector(x, y);
+	this.radius = r;
+	this.color = col;
+	
 	this.update = function() {
-		this.angle += type;
-		this.r += this.val;
-		this.g += this.val;
-		this.b += this.val;
-	}
-
-	this.show = function() {
-		translate(width / 2, height / 2);
-		rotate(this.angle);
-		beginShape();
-		for (var i = 0; i < 500; i++) {
-			fill(this.r, this.g, this.b, 5);
-			curveVertex((i * 2) * sin(i / 5.0), (i * 2) * cos(i / 5.0));
+		
+		if (this.radius > 0) {
+			this.radius -= 2;
+			col += 0.01;
+			if (col > 360) col = 0;
 		}
-		endShape();
+		
+	}
+	
+	this.show = function() {
+		fill(this.color, 100, 100);
+		ellipse(this.position.x, this.position.y, this.radius);
 	}
 }
 
-var s;
-var s2;
+var circles;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-	s = new Spiral(0.5);
-	s2 = new Spiral(-0.5)
+	noStroke();
+	colorMode(HSB);
+	
+	circles = new Array();
+}
 
-
-	strokeWeight(1);
+function mouseDragged() {
+	circles.push(new Circle(mouseX, mouseY, 150));
 }
 
 function draw() {
-
-	s.update();
-	s.show();
-
-	s2.update();
-	s2.show();
+	background(0);
+	
+	for (var i = 0; i < circles.length; i++) {
+		circles[i].update();
+		circles[i].show();
+	}
 }
