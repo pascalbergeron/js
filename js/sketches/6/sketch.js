@@ -1,48 +1,51 @@
-function Ball(x, y) {
-	this.pos = createVector(x, y);
-	this.vel = p5.Vector.random2D();
-	this.radius = 100;
+function Drop() {
+	this.pos = createVector(random(-100, width), random(0, height));
+	this.vel = createVector(random(1,1.5), 8);
+	this.acc = createVector(0, 0.4);
 	
 	this.update = function() {
-		this.pos.x += this.vel.x * 10;
-		this.pos.y += this.vel.y * 10;
+		this.pos.add(this.vel);
+		this.vel.add(this.acc);
 		
-		if (this.pos.x < 0 || this.pos.x > width) this.vel.x *= -1;
-		if (this.pos.y < 0 || this.pos.y > height) this.vel.y *= -1;
+		if (random() < 0.1) this.acc.x = random(0.1,1);
+		if (this.acc.x > 0) this.acc.x -= 0.1;
+		
+		if (this.pos.y > height) {
+			this.pos.x = random(-100, width);
+			this.pos.y = random(0, -height / 2);
+			this.vel = createVector(random(1,1.5), 8);
+		}
+	}
+	
+	this.show = function() {
+		line(this.pos.x, this.pos.y, this.pos.x + this.vel.x, this.pos.y + random(15,25));
 	}
 }
 
-var ball;
+var d = [];
+var num = 400;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-	//createCanvas(200, 200);
 	
-	pixelDensity(1);
+	stroke(39);
+	strokeWeight(1);
 	
-	ball = new Ball(width / 2, height / 2);
-}
-
-function draw() {
-	background(0);
-	
-	loadPixels();
-	for (var x = floor(ball.pos.x - ball.radius); x < ball.pos.x + ball.radius; x += 6) {
-		for (var y = floor(ball.pos.y - ball.radius); y < ball.pos.y + ball.radius; y += 6) {
-			var index = (x + y * width) * 4;
-			//var d = dist(x, y, ball.pos.x, ball.pos.y);
-			var d = map(dist(x, y, ball.pos.x, ball.pos.y), 0, ball.radius, 255, 0);
-			pixels[index+0] = d * Math.random();
-			pixels[index+1] = d * Math.random();
-			pixels[index+2] = d * Math.random();
-			pixels[index+3] = 255; 
-		}
+	for (var i = 0; i < num; i++) {
+		d[i] = new Drop();
 	}
-	updatePixels();
-	
-	ball.update();
 }
 
 function windowResized() {
 	resizeCanvas(windowWidth, windowHeight);
+}
+
+function draw() {
+	background(0, 170);
+	this.drawingContext.clearRect(0, 0, width, height);
+	
+	for (var i = 0; i < d.length; i++) {
+		d[i].update();
+		d[i].show();
+	}
 }
