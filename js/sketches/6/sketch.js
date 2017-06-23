@@ -1,7 +1,8 @@
 function Drop() {
-	this.pos = createVector(random(-100, width), random(0, height));
+	this.pos = createVector(random(-100, width), random(height));
 	this.vel = createVector(random(1,1.5), 8);
 	this.acc = createVector(0, 0.4);
+	this.c = random(50, 75);
 	
 	this.update = function() {
 		this.pos.add(this.vel);
@@ -23,12 +24,12 @@ function Drop() {
 }
 
 var d = [];
-var num = 400;
+var num = 700;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 	
-	stroke(39);
+	stroke(95);
 	strokeWeight(1);
 	
 	for (var i = 0; i < num; i++) {
