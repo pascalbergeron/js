@@ -84,3 +84,4 @@ function toggleAudio(cnv) {
   cnv.mouseOut(function() {
     carrier.amp(0.0, 1.0);
   });
+}
