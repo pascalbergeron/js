@@ -1,17 +1,63 @@
 
-body {
-	background-color: rgb(0, 0, 0);
+html {
+	height: 100%;
 }
 
-#content {
+body {
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#gradient {
+}
+
+#center {
 	max-width: 960px;
 	margin: 0 auto;
 	padding: 50px;
+	position: relative;
 }
 
-#content img {
+#center img {
 	border-radius: 25px;
-	border: 2px solid rgb(25, 25, 27);
+	border: 2px solid rgb(125, 85, 77);
+	height: auto;
 	
-	margin: 10px;
+	padding: 0;
+	margin: 0;
+}
+
+#links {
+	position: absolute;
+	text-align:center;
+	padding: 0px;
+	min-height: 154px;
+}
+
+.ab {
+	position: relative;
+	width: 154px; /* +2px pour la bordure de "#center img" */
+	height: 154px;
+	display: inline-block;
+	margin: auto;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+@font-face {
+	font-family: "cherry";
+	src: url('cherry.ttf');
+}
+
+#cipher {
+	position: absolute;
+	font-size: 11px;
+	font-family: cherry;
+	
+	width: auto;
+	padding: 10px;
+	
+	bottom: 0;
+	text-align: justify;
 }
