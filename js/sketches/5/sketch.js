@@ -13,13 +13,13 @@ function Line(x1, y1, x2, y2) {
 		var x = map(mouseX, 0, width, 0, 1);
 		var y = map(mouseY, 0, height, 0, 1);
 		h = x * y / 0.5;
-		stroke(h, random(0.7, 1), random(0.2, 0.6), random(0.1, 0.3));
+		stroke(h, random(0.8, 0.9), random(0.3, 0.5), random(0.15, 0.25));
 		line(this.first.x, this.first.y, this.second.x, this.second.y);
 	}
 }
 
 var lines = []
-var step = 15;
+var step = 25;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
@@ -51,18 +51,16 @@ function draw() {
 	background(bg, 0.8, 0.25, 0.6);
 	strokeWeight(sw);
 	
-	bg = h * 0.5;
+	bg = h + h < 0.5 ? 0.5 : -0.5;
 	
 	if (growing) {
-		sw += 0.75;
+		sw += 0.5;
 		if (sw >= 30) growing = false;
 	}
 	else {
-		sw -= 1.5;
+		sw -= 1;
 		if (sw <= 3) growing = true;
 	}
-	
-	
 	
 	for (var i = 0; i < lines.length; i++) {
 		lines[i].show();
